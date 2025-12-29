@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
-	// Github,
-	// Linkedin,
+	Github,
+	Linkedin,
 	Mail,
 	Moon,
 	Sun,
@@ -130,7 +130,7 @@ export default function App() {
 
 	return (
 		<div
-			className={`min-h-screen transition-colors duration-300 ${
+			className={`min-h-screen transition-colors duration-300  ${
 				darkMode ? 'bg-slate-900 text-slate-200' : 'bg-slate-50 text-slate-800'
 			}`}>
 			{/* Navigation / Header */}
@@ -157,13 +157,13 @@ export default function App() {
 				</div>
 			</nav>
 
-			<main className='max-w-3xl mx-auto px-6 pt-32 pb-20'>
+			<main className='max-w-6xl mx-auto px-4 pt-32 pb-20'>
 				{/* Hero Section */}
 				<section className='mb-20 animate-fade-in-up'>
 					<div className='flex flex-col md:flex-row items-start justify-between gap-6'>
 						<div>
-							<h2 className='text-4xl md:text-5xl font-extrabold mb-4 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 pb-1'>
-								Miguel Angel Prado
+							<h2 className='text-4xl md:text-5xl font-extrabold mb-4 tracking-tight text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600 pb-1'>
+								Miguel Angel Prado Garcia
 							</h2>
 							<p
 								className={`text-xl md:text-2xl font-light mb-6 ${
@@ -192,7 +192,7 @@ export default function App() {
 											? 'border-slate-700 hover:bg-slate-800'
 											: 'border-slate-200 hover:bg-white shadow-sm'
 									}`}>
-									{/* <Linkedin size={16} className='text-blue-700' /> */}
+									{<Linkedin size={16} className='text-blue-700' />}
 									<span>LinkedIn</span>
 								</a>
 								{/* GitHub Link added implicitly via Projects, but good to have here too if desired */}
@@ -205,10 +205,10 @@ export default function App() {
 											? 'border-slate-700 hover:bg-slate-800'
 											: 'border-slate-200 hover:bg-white shadow-sm'
 									}`}>
-									{/* <Github
+									{ <Github
 										size={16}
 										className={darkMode ? 'text-white' : 'text-black'}
-									/> */}
+									/> }
 									<span>GitHub</span>
 								</a>
 							</div>
@@ -266,9 +266,13 @@ export default function App() {
 						Proyectos Destacados
 					</h3>
 
-					<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+					{/* Contenedor del Scroll */}
+					<div className='grid grid-rows-2 grid-flow-col gap-4 overflow-x-auto pb-4 snap-x snap-mandatory'>
 						{repos.map((project, idx) => (
-							<ProjectCard key={idx} project={project} darkMode={darkMode} />
+							// Envolvemos la tarjeta en un div para darle un ancho mínimo fijo
+							<div key={idx} className='min-w-[85vw] md:min-w-87.5 snap-center'>
+								<ProjectCard project={project} darkMode={darkMode} />
+							</div>
 						))}
 					</div>
 				</section>
@@ -285,7 +289,7 @@ export default function App() {
 							<div key={idx} className='relative group'>
 								{/* Timeline dot */}
 								<div
-									className={`absolute -left-[41px] top-1 h-5 w-5 rounded-full border-4 transition-colors ${
+									className={`absolute -left-10.25 top-1 h-5 w-5 rounded-full border-4 transition-colors ${
 										darkMode
 											? 'bg-slate-900 border-blue-500'
 											: 'bg-white border-blue-500'
@@ -384,10 +388,10 @@ export default function App() {
 
 			{/* Floating Action Button for PDF */}
 			<a
-				href='landin_page_micke_prado_dev/cv.pdf'
-				onClick={(e) => {
-					e.preventDefault();
-				}}
+				href='/cv.pdf'
+				download='CV_Miguel_Angel_Prado.pdf' // Opcional: Nombre con el que se guardará el archivo
+				target='_blank'
+				rel='noopener noreferrer'
 				className='fixed bottom-8 right-8 p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all hover:scale-110 z-50 flex items-center gap-2 group'
 				title='Descargar CV'>
 				<Download size={24} />
