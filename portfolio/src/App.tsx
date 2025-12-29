@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
 	// Github,
 	// Linkedin,
@@ -17,9 +17,12 @@ import {
 } from 'lucide-react';
 import { ProjectCard } from './components/ProjectCard';
 import { SkillCard } from './components/SkillCard';
-
+import type { GithubRepo } from './../utils/adapters/github.types';
+import { mapGithubRepoToProject } from './../utils/adapters/github.adapter';
+import type { Project } from '../utils/adapters/project.types';
 export default function App() {
 	const [darkMode, setDarkMode] = useState(false);
+	const [repos, setRepos] = useState<Project[]>([]);
 
 	// Toggle dark mode
 	useEffect(() => {
@@ -31,6 +34,18 @@ export default function App() {
 	}, [darkMode]);
 
 	const toggleTheme = () => setDarkMode(!darkMode);
+
+	useEffect(() => {
+		fetch(
+			`https://api.github.com/users/MickePrado-DEV/repos?sort=updated&per_page=100`
+		)
+			.then((res) => res.json())
+			.then((data: GithubRepo[]) => {
+				const mapped = data.map(mapGithubRepoToProject);
+
+				setRepos(mapped);
+			});
+	}, []);
 
 	const skills = {
 		languages: [
@@ -110,37 +125,6 @@ export default function App() {
 			degree: 'Licenciatura en Tecnologías de la Información',
 			period: 'Jul 2015 - Jul 2019',
 			detail: 'Fundamentos sólidos en POO con Java y desarrollo web/móvil.',
-		},
-	];
-
-	// Datos de ejemplo para proyectos (Reemplazar con datos reales de GitHub)
-	const projects = [
-		{
-			name: 'Compact Survey Platform',
-			description:
-				'Plataforma de gestión y análisis de encuestas con exportación a PDF/Excel. Arquitectura escalable.',
-			tech: ['React', 'Node.js', 'Express', 'Sequelize'],
-			stars: 12,
-			forks: 4,
-			link: '#',
-		},
-		{
-			name: 'Flutter Mobile Architecture',
-			description:
-				'Template base para apps Flutter usando Clean Architecture, Riverpod y configuración CI/CD lista para usar.',
-			tech: ['Flutter', 'Dart', 'GitHub Actions', 'Fastlane'],
-			stars: 25,
-			forks: 8,
-			link: '#',
-		},
-		{
-			name: 'Mickeprado Portfolio',
-			description:
-				'Este portafolio minimalista construido con React y Tailwind CSS, optimizado para GitHub Pages.',
-			tech: ['React', 'Vite', 'Tailwind CSS'],
-			stars: 5,
-			forks: 1,
-			link: '#',
 		},
 	];
 
@@ -283,7 +267,7 @@ export default function App() {
 					</h3>
 
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-						{projects.map((project, idx) => (
+						{repos.map((project, idx) => (
 							<ProjectCard key={idx} project={project} darkMode={darkMode} />
 						))}
 					</div>
@@ -400,12 +384,9 @@ export default function App() {
 
 			{/* Floating Action Button for PDF */}
 			<a
-				href='#'
+				href='landin_page_micke_prado_dev/cv.pdf'
 				onClick={(e) => {
 					e.preventDefault();
-					alert(
-						'Aquí iría el enlace a tu archivo PDF real (ej. /cv.pdf) una vez subido a GitHub.'
-					);
 				}}
 				className='fixed bottom-8 right-8 p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all hover:scale-110 z-50 flex items-center gap-2 group'
 				title='Descargar CV'>
