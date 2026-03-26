@@ -17,12 +17,9 @@ import {
 } from 'lucide-react';
 import { ProjectCard } from './components/ProjectCard';
 import { SkillCard } from './components/SkillCard';
-import type { GithubRepo } from './../utils/adapters/github.types';
-import { mapGithubRepoToProject } from './../utils/adapters/github.adapter';
-import type { Project } from '../utils/adapters/project.types';
+
 export default function App() {
 	const [darkMode, setDarkMode] = useState(false);
-	const [repos, setRepos] = useState<Project[]>([]);
 
 	// Toggle dark mode
 	useEffect(() => {
@@ -35,17 +32,18 @@ export default function App() {
 
 	const toggleTheme = () => setDarkMode(!darkMode);
 
-	useEffect(() => {
-		fetch(
-			`https://api.github.com/users/MickePrado-DEV/repos?sort=updated&per_page=100`
-		)
-			.then((res) => res.json())
-			.then((data: GithubRepo[]) => {
-				const mapped = data.map(mapGithubRepoToProject);
-
-				setRepos(mapped);
-			});
-	}, []);
+	const projects = [
+		{
+			name: 'Musicfy',
+			slug: 'musicfy', // <--- Debe coincidir con el nombre de la carpeta en public/assets/
+			description: 'Una plataforma de streaming...',
+			repoUrl: 'https://github.com/usuario/repo',
+			demoUrl: 'https://usuario.github.io/repo',
+			technologies: ['React', 'Tailwind', 'Firebase', 'Electron'],
+			images: ['login.webp'], // <--- El nombre exacto del archivo con su extensión
+			featured: true,
+		},
+	];
 
 	const skills = {
 		languages: [
@@ -205,10 +203,12 @@ export default function App() {
 											? 'border-slate-700 hover:bg-slate-800'
 											: 'border-slate-200 hover:bg-white shadow-sm'
 									}`}>
-									{ <Github
-										size={16}
-										className={darkMode ? 'text-white' : 'text-black'}
-									/> }
+									{
+										<Github
+											size={16}
+											className={darkMode ? 'text-white' : 'text-black'}
+										/>
+									}
 									<span>GitHub</span>
 								</a>
 							</div>
@@ -268,7 +268,7 @@ export default function App() {
 
 					{/* Contenedor del Scroll */}
 					<div className='grid grid-rows-2 grid-flow-col gap-4 overflow-x-auto pb-4 snap-x snap-mandatory'>
-						{repos.map((project, idx) => (
+						{projects.map((project, idx) => (
 							// Envolvemos la tarjeta en un div para darle un ancho mínimo fijo
 							<div key={idx} className='min-w-[85vw] md:min-w-87.5 snap-center'>
 								<ProjectCard project={project} darkMode={darkMode} />
