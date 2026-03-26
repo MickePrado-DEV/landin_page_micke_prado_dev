@@ -1,0 +1,32 @@
+name: Deploy to GitHub Pages
+
+on:
+  pull_request:
+    types: [closed] # se dispara cuando se cierra el PR
+    branches:
+      - master # solo PRs hacia master
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true # SOLO si fue merge (no cerrado sin merge)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        run: |
+          npm install -g gh-pages
+          gh-pages -d dist

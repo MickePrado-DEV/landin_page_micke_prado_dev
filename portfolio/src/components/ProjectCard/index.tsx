@@ -52,7 +52,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 			</h4>
 
 			<p
-				className={`text-sm mb-4 flex-grow ${
+				className={`text-sm mb-4 grow ${
 					darkMode ? 'text-slate-400' : 'text-slate-600'
 				}`}>
 				{project.description}
@@ -67,11 +67,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 						</div>
 					)}
 
-					{project.forks && project.forks > 0 && (
+					{project.forks && project.forks > 0 ? (
 						<div className='flex items-center gap-1'>
 							<GitFork size={12} />
 							<span>{project.forks}</span>
 						</div>
+					) : (
+						<></>
 					)}
 				</div>
 			)}
