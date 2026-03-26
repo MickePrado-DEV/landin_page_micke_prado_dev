@@ -1,7 +1,7 @@
 // github.adapter.ts
 
-import { GithubRepo } from "./github.types";
-import { Project } from "./project.types";
+import type { GithubRepo } from "./github.types";
+import type { Project } from "./project.types";
 
 
 export function mapGithubRepoToProject(repo: GithubRepo): Project {
