@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [closed] # se dispara cuando se cierra el PR
     branches:
-      - main # solo PRs hacia master
+      - main # solo PRs hacia main
 
 jobs:
   deploy:
