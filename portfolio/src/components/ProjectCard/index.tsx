@@ -8,24 +8,9 @@ import {
 	Code2,
 	ImageOff,
 } from 'lucide-react';
+import type { IProjectCardProps } from '../../Interfaces';
 
-interface Project {
-	name: string;
-	slug: string;
-	description: string;
-	repoUrl: string;
-	demoUrl?: string;
-	technologies: string[];
-	images: string[];
-	featured?: boolean;
-}
-
-interface ProjectCardProps {
-	project: Project;
-	darkMode: boolean;
-}
-
-export const ProjectCard: React.FC<ProjectCardProps> = ({
+export const ProjectCard: React.FC<IProjectCardProps> = ({
 	project,
 	darkMode,
 }) => {
@@ -96,7 +81,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 				<div className='flex items-center gap-2 mb-3'>
 					<Code2 size={18} className='text-blue-500' />
 					<h4
-						className={`text-xl font-bold tracking-tight ${darkMode ? 'text-white' : 'text-slate-800'}`}>
+						className={`text-xl font-bold tracking-tight ${
+							darkMode ? 'text-white' : 'text-slate-800'
+						}`}>
 						{project.name}
 					</h4>
 				</div>

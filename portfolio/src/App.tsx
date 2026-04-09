@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { ProjectCard } from './components/ProjectCard';
 import { SkillCard } from './components/SkillCard';
+import { projects } from './../utils/data/gitProjectsData';
 
 export default function App() {
 	const [darkMode, setDarkMode] = useState(false);
@@ -31,19 +32,6 @@ export default function App() {
 	}, [darkMode]);
 
 	const toggleTheme = () => setDarkMode(!darkMode);
-
-	const projects = [
-		{
-			name: 'Musicfy',
-			slug: 'musicfy', // <--- Debe coincidir con el nombre de la carpeta en public/assets/
-			description: 'Una plataforma de streaming...',
-			repoUrl: 'https://github.com/usuario/repo',
-			demoUrl: 'https://usuario.github.io/repo',
-			technologies: ['React', 'Tailwind', 'Firebase', 'Electron'],
-			images: ['login.webp'], // <--- El nombre exacto del archivo con su extensión
-			featured: true,
-		},
-	];
 
 	const skills = {
 		languages: [
